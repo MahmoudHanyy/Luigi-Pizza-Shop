@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+        <title>Luigi's</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+
+        <!-- Font -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'fonts/beyond_the_mountains-webfont.css' %}" type="text/css"/>
+
+        <!-- Stylesheets -->
+
+        <link href="{% static 'plugin-frameworks/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'plugin-frameworks/swiper.css' %}" rel="stylesheet">
+        <link href="{% static 'fonts/ionicons.css' %}" rel="stylesheet">
+        <link href="{% static 'common/styles.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+        <div class="container">
+                <a class="logo" href="#"><img src="static/images/logo-white.png" alt="Logo"></a>
+
+                <div class="right-area">
+                  <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <input name='username' type="text" placeholder="username">
+                    <input name='password' type="password" placeholder="password">
+                    <input type='submit' class="plr-20 color-white btn-fill-primary" value='Log in'>
+                  </form>
+                </div><!-- right-area -->
+
+                <a class="menu-nav-icon" data-menu="#main-menu" href="#"><i class="ion-navicon"></i></a>
+
+                <div class="clearfix"></div>
+        </div><!-- container -->
+</header>
+
+
+<section class="bg-1 h-900x main-slider pos-relative">
+        <div class="triangle-up pos-bottom"></div>
+        <div class="container h-100">
+                <div class="dplay-tbl">
+                        <div class="dplay-tbl-cell center-text color-white">
+                    <h6><a  class="plr-20 color-white btn-fill-primary"  href="/register">Register</a></h6>
+                                <h5><b>BEST IN TOWN</b></h5>
+                                <h1 class="mt-30 mb-15">Pizza & Pasta</h1>
+
+                        </div><!-- dplay-tbl-cell -->
+                </div><!-- dplay-tbl -->
+        </div><!-- container -->
+</section>
