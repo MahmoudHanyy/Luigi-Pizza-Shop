@@ -4,11 +4,18 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .models import *
 
 # Create your views here.
 def index(request, name="index"):
     if request.user.is_authenticated:
-        return render(request, f"orders/{name}.html")
+        if name=='menu':
+            pizzas = Pizza.objects.values()
+            print(pizzas[1]['id'])
+            context = {'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
+            return render(request, f"orders/{name}.html", context)
+        else:
+            return render(request, f"orders/{name}.html", context={})
     else:
         if name == 'register' :  return render(request, "orders/register.html")
         return render(request, "orders/login.html")
@@ -20,6 +27,7 @@ def login_view(request):
     user= authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
+
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "orders/login.html")
@@ -50,3 +58,10 @@ def register(request):
 
     else:
          return HttpResponseRedirect(reverse("index"))
+
+
+
+def order(request, id):
+    pizza= Pizza.objects.get(pk=id)
+    print(pizza)
+    return HttpResponse("Hello, Abdullah!")

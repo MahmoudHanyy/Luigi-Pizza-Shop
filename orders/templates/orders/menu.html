@@ -65,30 +65,34 @@
         <div class="container">
                 <div class="heading"><h3>Choose from Pizza</h3></div>
                 <div class="row">
+
                         <div class="col-lg-3 col-md-4  col-sm-6 ">
                                 <div class="center-text mb-30">
                                         <div class="ïmg-200x mlr-auto pos-relative">
                                                 <h6 class="ribbon-cont color-white"><div class="ribbon primary"></div><b>OFFER</b></h6>
                                                 <img src="static/images/seller-2-200x200.png" alt="">
                                         </div>
-                                        <h5 class="mt-20">Pizza Margherita</h5>
-                                        <h4 class="mt-5 color-primary"><b>$11.90</b></h4>
+                                        <h5 class="mt-20">Small Regular Pizza</h5>
+                                        <h4 class="mt-5 color-primary"><b>${{R_small.price}}</b></h4>
+                                        <h6 class="mt-20"><a href="{% url 'order' R_small.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
                         <div class="col-lg-3 col-md-4  col-sm-6 ">
                                 <div class="center-text mb-30">
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
-                                        <h5 class="mt-20">Pizza Margherita</h5>
-                                        <h4 class="mt-5 color-primary"><b>$11.90</b></h4>
+                                        <h5 class="mt-20">Large Regular Pizza</h5>
+                                        <h4 class="mt-5 color-primary"><b>${{R_Large.price}}</b></h4>
+                                        <h6 class="mt-20"><a href="{% url 'order' R_Large.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
                         <div class="col-lg-3 col-md-4  col-sm-6 ">
                                 <div class="center-text mb-30">
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
-                                        <h5 class="mt-20">Pizza Margherita</h5>
-                                        <h4 class="mt-5 color-primary"><b>$11.90</b></h4>
+                                        <h5 class="mt-20">Small Sicilian Pizza</h5>
+                                        <h4 class="mt-5 color-primary"><b>${{S_small.price}}</b></h4>
+                                        <h6 class="mt-20"><a href="{% url 'order' S_small.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -98,8 +102,9 @@
                                                 <h6  class="ribbon-cont color-white"><div class="ribbon secondary"></div><b>SPECIALITY</b></h6>
                                                 <img src="static/images/seller-2-200x200.png" alt="">
                                         </div>
-                                        <h5 class="mt-20">Pizza Margherita</h5>
-                                        <h4 class="mt-5 color-primary"><b>$11.90</b></h4>
+                                        <h5 class="mt-20">Large Sicilian Pizza</h5>
+                                        <h4 class="mt-5 color-primary"><b>${{S_Large.price}}</b></h4>
+                                        <h6 class="mt-20"><a href="{% url 'order' S_Large.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
                 </div><!-- row-->
@@ -202,7 +207,7 @@
         </div><!-- container -->
 </section>
 
-
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <section>
         <div class="container">
                 <div class="heading mb-sm-10"><h3>Choose from Pasta</h3></div>
@@ -275,7 +280,7 @@
                 </div><!-- row -->
         </div><!-- container -->
 </section>
-
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 <footer class="pb-50  pt-70 pos-relative">
         <div class="pos-top triangle-bottom"></div>
