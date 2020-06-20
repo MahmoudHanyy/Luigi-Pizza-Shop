@@ -11,8 +11,10 @@ def index(request, name="index"):
     if request.user.is_authenticated:
         if name=='menu':
             pizzas = Pizza.objects.values()
+            toppings = Topping.objects.values()
+            subs = Sub.objects.values()
             print(pizzas[1]['id'])
-            context = {'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
+            context = {'subs':subs ,'toppings': toppings,'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
             return render(request, f"orders/{name}.html", context)
         else:
             return render(request, f"orders/{name}.html", context={})
@@ -65,3 +67,8 @@ def order(request, id):
     pizza= Pizza.objects.get(pk=id)
     print(pizza)
     return HttpResponse("Hello, Abdullah!")
+
+
+
+def cart(request):
+    pass    

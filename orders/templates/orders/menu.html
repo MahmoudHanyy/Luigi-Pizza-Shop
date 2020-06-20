@@ -16,6 +16,8 @@
         <link href="static/plugin-frameworks/swiper.css" rel="stylesheet">
         <link href="static/fonts/ionicons.css" rel="stylesheet">
         <link href="static/common/styles.css" rel="stylesheet">
+
+
 </head>
 <body>
 
@@ -25,7 +27,9 @@
 
                 <div class="right-area">
                         <h6><a class="plr-20 color-white btn-fill-primary" href="#">ORDER: +34 685 778 8892</a></h6>
-                      <h6><a class="plr-20 color-white btn-fill-primary" href="{% url 'logout' %}">Log out</a></h6>                </div><!-- right-area -->
+                      <h6><a class="plr-20 color-white btn-fill-primary" href="{% url 'logout' %}">Log out</a></h6>
+                    <h6><a  class="plr-20 color-white btn-fill-primary" href="{% url 'cart' %}"> <img src="static/images/cart.png"></a></h6>
+              </div><!-- right-area -->
 
                 <a class="menu-nav-icon" data-menu="#main-menu" href="#"><i class="ion-navicon"></i></a>
 
@@ -76,7 +80,7 @@
                                         <h5 class="mt-20">Small Regular Pizza</h5>
 
                                         <h4 class="mt-5 color-primary"><b>${{R_small.price}}</b></h4>
-                                        <h6 class="mt-20"><a href="{% url 'order' R_small.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -85,7 +89,7 @@
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
                                         <h5 class="mt-20">Large Regular Pizza</h5>
                                         <h4 class="mt-5 color-primary"><b>${{R_Large.price}}</b></h4>
-                                        <h6 class="mt-20"><a href="{% url 'order' R_Large.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -94,7 +98,7 @@
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
                                         <h5 class="mt-20">Small Sicilian Pizza</h5>
                                         <h4 class="mt-5 color-primary"><b>${{S_small.price}}</b></h4>
-                                        <h6 class="mt-20"><a href="{% url 'order' S_small.id %}" class="btn-brdr-primary plr-25"><b>Order Now</b></a></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -127,27 +131,35 @@
                   </button>
                 </div>
                 <div class="modal-body">
+                  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Toppings:</label>
                   <form class="form-inline">
-                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Toppings:</label>
+
                       <select class="custom-select my-1 mr-sm-2" id="topping_option_1">
-                       <option selected>    Cheese     </option>
-                       <option value="1">One</option>
-                       <option value="2">Two</option>
-                       <option value="3">Three</option>
+                       <option selected>Cheese</option>
+                       {% for topping in toppings %}
+                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                       {% endfor %}
                       </select>
 
                       <select class="custom-select my-1 mr-sm-2" id="topping_option_2">
                        <option selected>Topping</option>
-                       <option value="1">One</option>
-                       <option value="2">Two</option>
-                       <option value="3">Three</option>
+                       {% for topping in toppings %}
+                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                       {% endfor %}
                      </select>
 
                       <select class="custom-select my-1 mr-sm-2" id="topping_option_3">
                        <option selected>Topping</option>
-                       <option value="1">One</option>
-                       <option value="2">Two</option>
-                       <option value="3">Three</option>
+                       {% for topping in toppings %}
+                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                       {% endfor %}
+                      </select>
+
+                      <select class="custom-select my-1 mr-sm-2" id="subs_option_1">
+                       <option selected>Subs</option>
+                       {% for sub in subs %}
+                       <option value=f"{{topping.name}}">{{sub.name}} - {{sub.price}}</option>
+                       {% endfor %}
                       </select>
                   </form>
                 </div>
