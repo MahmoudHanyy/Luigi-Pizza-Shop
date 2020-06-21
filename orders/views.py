@@ -13,8 +13,8 @@ def index(request, name="index"):
             pizzas = Pizza.objects.values()
             toppings = Topping.objects.values()
             subs = Sub.objects.values()
-            print(pizzas[1]['id'])
-            context = {'subs':subs ,'toppings': toppings,'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
+            pastas = Pasta.objects.values()
+            context = {'pastas': pastas[0] , 'subs':subs ,'toppings': toppings,'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
             return render(request, f"orders/{name}.html", context)
         else:
             return render(request, f"orders/{name}.html", context={})
@@ -71,4 +71,4 @@ def order(request, id):
 
 
 def cart(request):
-    pass    
+    pass
