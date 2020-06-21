@@ -46,14 +46,23 @@
 
                           <form action="{% url 'register' %}" method='POST'>
                             {% csrf_token %}
-
-                            <input  class= 'register' name='firstname' type="text" placeholder="firstname"><br>
-                            <input  class= 'register' name='lastname' type="text" placeholder="lastname"><br>
-                            <input  class= 'register' name='username' type="text" placeholder="username"><br>
-                            <input  class= 'register' name='email' type="email" placeholder="email"><br>
-                            <input  class= 'register' name='password' type="password" placeholder="password"><br>
-                            <input type='submit' class="plr-20 color-white btn-fill-primary" value='Register'>
-                          </form>
+                              <div class="form-group">
+                                <input name='firstname' type="text" class="form-control" id="formGroupExampleInput" placeholder="Firstname, example: John">
+                              </div>
+                              <div class="form-group">
+                                <input name='lastname' type="text" class="form-control" id="formGroupExampleInput2" placeholder="Lastname, example: Kennedy">
+                              </div>
+                              <div class="form-group">
+                                <input name='username' type="text" class="form-control" id="formGroupExampleInput2" placeholder="Username, example: JohnKennedy">
+                              </div>
+                              <div class="form-group">
+                                <input name='password' type="password" class="form-control" id="formGroupExampleInput2" placeholder="enter a password">
+                              </div>
+                              <div class="form-group">
+                                <input name= 'email' type="email" class="form-control" id="formGroupExampleInput2" placeholder="email, example: John_kennedy@gmail.com">
+                              </div>
+                              <input type='submit' class="plr-20 color-white btn-fill-primary" value='Register'>
+                        </form>
 
                                 <h5><b>BEST IN TOWN</b></h5>
                                 <h1 class="mt-30 mb-15">Pizza & Pasta</h1>
