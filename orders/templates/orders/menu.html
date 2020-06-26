@@ -26,7 +26,7 @@
                 <a class="logo" href="#"><img src="static/images/logo-white.png" alt="Logo"></a>
 
                 <div class="right-area">
-                        <h6><a class="plr-20 color-white btn-fill-primary" href="#">ORDER: +34 685 778 8892</a></h6>
+                        <h6><a class="plr-20 color-white btn-fill-primary" data-toggle="modal"  data-target="#exampleModal">ORDER: +34 685 778 8892</a></h6>
                       <h6><a class="plr-20 color-white btn-fill-primary" href="{% url 'logout' %}">Log out</a></h6>
                     <h6><a  class="plr-20 color-white btn-fill-primary" href="{% url 'cart' %}"> <img src="static/images/cart.png"></a></h6>
               </div><!-- right-area -->
@@ -80,7 +80,7 @@
                                         <h5 class="mt-20">Small Regular Pizza</h5>
 
                                         <h4 class="mt-5 color-primary"><b>${{R_small.price}}</b></h4>
-                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25 to-modal" data-toggle="modal" data-id='{{R_small.id}}' data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -89,7 +89,7 @@
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
                                         <h5 class="mt-20">Large Regular Pizza</h5>
                                         <h4 class="mt-5 color-primary"><b>${{R_Large.price}}</b></h4>
-                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25 to-modal" data-toggle="modal" data-id='{{R_Large.id}}' data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -98,7 +98,7 @@
                                         <div class="ïmg-200x mlr-auto pos-relative"><img src="static/images/seller-2-200x200.png" alt=""></div>
                                         <h5 class="mt-20">Small Sicilian Pizza</h5>
                                         <h4 class="mt-5 color-primary"><b>${{S_small.price}}</b></h4>
-                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25 to-modal" data-toggle="modal" data-id='{{S_small.id}}' data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
 
@@ -110,7 +110,7 @@
                                         </div>
                                         <h5 class="mt-20">Large Sicilian Pizza</h5>
                                         <h4 class="mt-5 color-primary"><b>${{S_Large.price}}</b></h4>
-                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25" data-toggle="modal" data-target="#exampleModal">Order Now</button></h6>
+                                        <h6 class="mt-20"><button type="button" class="btn-brdr-primary plr-25 to-modal" data-toggle="modal" data-id='{{S_Large.id}}' data-target="#exampleModal">Order Now</button></h6>
                                 </div><!--text-center-->
                         </div><!-- col-md-3 -->
                 </div><!-- row-->
@@ -118,6 +118,7 @@
 
 
 </section>
+
 
 
     <!-- Modal -->
@@ -131,45 +132,88 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Toppings:</label>
-                  <form class="form-inline">
 
-                      <select class="custom-select my-1 mr-sm-2" id="topping_option_1">
-                       <option selected>Cheese</option>
-                       {% for topping in toppings %}
-                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                  <form id='modal-form' action="{% url 'order' %}" method="POST" class="form-inline" style="display: block;">
+                      {% csrf_token %}
+                      <h5 style="display: block;">Pizza:</h5>
+                      <select name='pizza' class="custom-select my-1 mr-sm-2" id="pizza_option_1" style="width:60%;">
+                       <option selected>Pizza</option>
+                       {% for pizza in pizzas %}
+                       <option value="{{pizza.price}}">{{pizza.style}} - {{pizza.size}} - {{pizza.price}}</option>
                        {% endfor %}
                       </select>
 
-                      <select class="custom-select my-1 mr-sm-2" id="topping_option_2">
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
+                      <input type="number" id="pizza-quantity" name="pizza-quantity" value='1' min="1" max="100" style="width:15%;">
+
+                      <h5 style="display: block;">Toppings:</h5>
+                      <select name='topping1' class="custom-select my-1 mr-sm-2" id="topping_option_1" style="width:60%;">
+                       <option selected>Cheese</option>
+                       {% for topping in toppings %}
+                       <option value="{{topping.name}}">{{topping.name}}</option>
+                       {% endfor %}
+                      </select>
+
+                      <select  name='topping2' class="custom-select my-1 mr-sm-2" id="topping_option_2" style="width:60%;">
                        <option selected>Topping</option>
                        {% for topping in toppings %}
-                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                       <option value="{{topping.name}}">{{topping.name}}</option>
                        {% endfor %}
                      </select>
 
-                      <select class="custom-select my-1 mr-sm-2" id="topping_option_3">
+                      <select name='topping3' class="custom-select my-1 mr-sm-2" id="topping_option_3" style="width:60%;">
                        <option selected>Topping</option>
                        {% for topping in toppings %}
-                       <option value=f"{{topping.name}}">{{topping.name}}</option>
+                       <option value="{{topping.name}}">{{topping.name}}</option>
                        {% endfor %}
                       </select>
 
-                      <select class="custom-select my-1 mr-sm-2" id="subs_option_1">
+                      <h5 style="display: block;">Salads and subs:</h5>
+                      <select name='subs' class="custom-select my-1 mr-sm-2" id="subs_option_1" style="width:60%;">
                        <option selected>Subs</option>
                        {% for sub in subs %}
-                       <option value=f"{{topping.name}}">{{sub.name}} - {{sub.price}}</option>
+                       <option value="{{sub.name}}">{{sub.name}} - {{sub.price}}</option>
                        {% endfor %}
                       </select>
+
+                      <select name='salads' class="custom-select my-1 mr-sm-2" id="salads_option_1" style="width:60%;">
+                       <option selected>Salads</option>
+                       {% for salad in salads %}
+                       <option value="{{salad.name}}">{{salad.name}} - {{salad.price}}</option>
+                       {% endfor %}
+                      </select>
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
+                      <input type="number" id="salad-quantity" name="salad-quantity" value='1' min="1" max="100" style="width:15%;">
+
+                      <select name='pastas' class="custom-select my-1 mr-sm-2" id="pastas_option_1" style="width:60%;">
+                       <option selected>Pastas</option>
+                       {% for pasta in pastas %}
+                       <option value="{{pasta.name}}">{{pasta.name}} - {{pasta.price}}</option>
+                       {% endfor %}
+                      </select>
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
+                      <input type="number" id="pasta-quantity" name="pasta-quantity" value='1' min="1" max="100" style="width:15%;">
+
+                      <select name='dinnerplatter' class="custom-select my-1 mr-sm-2" id="dinnerplatter_option_1" style="width:60%;">
+                       <option selected>DinnerPlatter</option>
+                       {% for dinnerplatter in dinnerplatters %}
+                       <option value="{{dinnerplatter.name}}">{{dinnerplatter.name}} - {{dinnerplatter.price}}</option>
+                       {% endfor %}
+                      </select>
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
+                      <input type="number" id="dinnerplatter-quantity" name="dinnerplatter-quantity" value='1' min="1" max="100" style="width:15%;">
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep ordering</button>
+                        <input id='checkout' type="submit" class="btn btn-success" value='Go to checkout'>
+                      </div>
                   </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep ordering</button>
-                  <a href="" type="button" class="btn btn-success">Go to checkout</a>
                 </div>
               </div>
             </div>
           </div>
+
+
+
 <section class="bg-lite-blue">
         <div class="container">
                 <div class="row">

@@ -14,7 +14,9 @@ def index(request, name="index"):
             toppings = Topping.objects.values()
             subs = Sub.objects.values()
             pastas = Pasta.objects.values()
-            context = {'pastas': pastas[0] , 'subs':subs ,'toppings': toppings,'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
+            salads = Salad.objects.values()
+            dinnerplatters = DinnerPlatter.objects.values()
+            context = {'salads': salads, 'dinnerplatters': dinnerplatters, 'pizzas':pizzas, 'pastas': pastas , 'subs':subs ,'toppings': toppings,'S_small': pizzas[0], 'S_Large': pizzas[1],'R_small': pizzas[2],'R_Large': pizzas[3]}
             return render(request, f"orders/{name}.html", context)
         else:
             return render(request, f"orders/{name}.html", context={})
@@ -61,14 +63,22 @@ def register(request):
     else:
          return HttpResponseRedirect(reverse("index"))
 
-
-
-def order(request, id):
-    pizza= Pizza.objects.get(pk=id)
-    print(pizza)
-    return HttpResponse("Hello, Abdullah!")
-
-
-
 def cart(request):
-    pass
+    return HttpResponse('I am the cart')
+
+def order(request):
+    pizza = request.POST['pizza']
+    topping1 = request.POST['topping1']
+    topping2 = request.POST['topping2']
+    topping3 = request.POST['topping3']
+    subs = request.POST['subs']
+    salad = request.POST['salads']
+    pasta = request.POST['pastas']
+    dinnerplatter= request.POST['dinnerplatter']
+
+    pizza_quantity = request.POST["pizza-quantity"]
+    salad_quantity = request.POST["salad-quantity"]
+    pasta_quantity = request.POST["pasta-quantity"]
+    dinnerplatter_quantity = request.POST["dinnerplatter-quantity"]
+
+    return HttpResponse("Hello, Abdullah! "+pizza)
