@@ -1,6 +1,6 @@
 #source newenv/bin/activate
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -67,18 +67,77 @@ def cart(request):
     return HttpResponse('I am the cart')
 
 def order(request):
-    pizza = request.POST['pizza']
-    topping1 = request.POST['topping1']
-    topping2 = request.POST['topping2']
-    topping3 = request.POST['topping3']
-    subs = request.POST['subs']
-    salad = request.POST['salads']
-    pasta = request.POST['pastas']
-    dinnerplatter= request.POST['dinnerplatter']
+    products = ['Pizza', 'Pasta','Salad', 'Sub', 'Dinnerplatter']
 
-    pizza_quantity = request.POST["pizza-quantity"]
-    salad_quantity = request.POST["salad-quantity"]
-    pasta_quantity = request.POST["pasta-quantity"]
-    dinnerplatter_quantity = request.POST["dinnerplatter-quantity"]
+    total = 0.0
+    data = request.POST.copy()
+    for product in products:
 
-    return HttpResponse("Hello, Abdullah! "+pizza)
+            if product == 'Pizza':
+                try:
+
+                    if data['topping2'] != 'Select':
+                        topping = Topping.objects.get(id = int(data['topping2']))
+                        pizza = Pizza.objects.get(id=int(data[product]))
+                    if data['topping3'] != 'Select':
+                        topping = Topping.objects.get(id = int(data['topping3']))
+                        pizza.toppings.add(topping)
+
+                    if data['topping1'] != 'Cheese':
+                        topping = Topping.objects.get(id = int(data['topping1']))
+                        pizza.toppings.add(topping)
+
+                    else:
+                        topping = Topping.objects.get(id = int(data['topping1']))
+                        pizza.toppings.add(topping)
+                    print(pizza)
+                except: pizza = None
+
+            if product == 'Pasta':
+                try: pasta = Pasta.objects.get(id=int(data[product]))
+                except: pasta= None
+            if product == 'Salad':
+                try: salad = Salad.objects.get(id=int(data[product]))
+                except: salad= None
+            if product == 'Sub':
+                try: sub = Sub.objects.get(id=int(data[product]))
+                except: sub= None
+            if product == 'Dinnerplatter':
+                try:   dinnerplatter = DinnerPlatter.objects.get(id=int(data[product]))
+
+                except: dinnerplatter= None
+
+
+
+
+    #create order object if not present
+    order, created = Order.objects.get_or_create(
+        pizza=pizza,
+        pasta=pasta,
+        salad=salad,
+        dinnerplatter=dinnerplatter,
+        sub=sub,
+        pasta_quantity=data['pasta_quantity'],
+        pizza_quantity=data['pizza_quantity'],
+        salad_quantity=data['salad_quantity'],
+        dinnerplatter_quantity=data['dinnerplatter_quantity'],
+        user=request.user,
+        ordered=False
+    )
+    #get cart of user
+    try:
+        cart = Cart.objects.filter(user=request.user, ordered=False).first()
+        cart.order.add(order)
+
+    #if cart_qs.exists():
+    #    cart = cart_qs[0]
+
+    except:
+        cart = Cart.objects.create(user=request.user, ordered=False)
+        cart.order.add(order)
+        cart.save()
+    #print(order)
+    #print(cart)
+
+
+    return HttpResponse("Hello, Kareem! ")

@@ -136,15 +136,19 @@
                   <form id='modal-form' action="{% url 'order' %}" method="POST" class="form-inline" style="display: block;">
                       {% csrf_token %}
                       <h5 style="display: block;">Pizza:</h5>
-                      <select name='pizza' class="custom-select my-1 mr-sm-2" id="pizza_option_1" style="width:60%;">
-                       <option selected>Pizza</option>
+                      <select name='Pizza' class="custom-select my-1 mr-sm-2" id="pizza_option_1" style="width:60%;">
+                       <option selected>Select</option>
                        {% for pizza in pizzas %}
-                       <option value="{{pizza.price}}">{{pizza.style}} - {{pizza.size}} - {{pizza.price}}</option>
+                       {% if  pizza.style == 'R' %}
+                       <option value="{{pizza.id}}">Regular - {{pizza.size}} - {{pizza.price}}</option>
+                       {% else %}
+                       <option value="{{pizza.id}}">Sicilian - {{pizza.size}} - {{pizza.price}}</option>
+                       {% endif %}
                        {% endfor %}
                       </select>
 
                       <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
-                      <input type="number" id="pizza-quantity" name="pizza-quantity" value='1' min="1" max="100" style="width:15%;">
+                      <input type="number" id="pizza-quantity" name="pizza_quantity" value='1' min="1" max="100" style="width:15%;">
 
                       <h5 style="display: block;">Toppings:</h5>
                       <select name='topping1' class="custom-select my-1 mr-sm-2" id="topping_option_1" style="width:60%;">
@@ -155,53 +159,53 @@
                       </select>
 
                       <select  name='topping2' class="custom-select my-1 mr-sm-2" id="topping_option_2" style="width:60%;">
-                       <option selected>Topping</option>
+                       <option selected>Select</option>
                        {% for topping in toppings %}
-                       <option value="{{topping.name}}">{{topping.name}}</option>
+                       <option value="{{topping.id}}">{{topping.name}}</option>
                        {% endfor %}
                      </select>
 
                       <select name='topping3' class="custom-select my-1 mr-sm-2" id="topping_option_3" style="width:60%;">
-                       <option selected>Topping</option>
+                       <option selected>Select</option>
                        {% for topping in toppings %}
                        <option value="{{topping.name}}">{{topping.name}}</option>
                        {% endfor %}
                       </select>
 
                       <h5 style="display: block;">Salads and subs:</h5>
-                      <select name='subs' class="custom-select my-1 mr-sm-2" id="subs_option_1" style="width:60%;">
-                       <option selected>Subs</option>
+                      <select name='Sub' class="custom-select my-1 mr-sm-2" id="subs_option_1" style="width:60%;">
+                       <option selected>Select</option>
                        {% for sub in subs %}
-                       <option value="{{sub.name}}">{{sub.name}} - {{sub.price}}</option>
+                       <option value="{{sub.id}}">{{sub.name}} - {{sub.price}}</option>
                        {% endfor %}
                       </select>
 
-                      <select name='salads' class="custom-select my-1 mr-sm-2" id="salads_option_1" style="width:60%;">
-                       <option selected>Salads</option>
+                      <select name='Salad' class="custom-select my-1 mr-sm-2" id="salads_option_1" style="width:60%;">
+                       <option selected>Select</option>
                        {% for salad in salads %}
-                       <option value="{{salad.name}}">{{salad.name}} - {{salad.price}}</option>
+                       <option value="{{salad.id}}">{{salad.name}} - {{salad.price}}</option>
                        {% endfor %}
                       </select>
                       <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
-                      <input type="number" id="salad-quantity" name="salad-quantity" value='1' min="1" max="100" style="width:15%;">
+                      <input type="number" id="salad-quantity" name="salad_quantity" value='1' min="1" max="100" style="width:15%;">
 
-                      <select name='pastas' class="custom-select my-1 mr-sm-2" id="pastas_option_1" style="width:60%;">
-                       <option selected>Pastas</option>
+                      <select name='Pasta' class="custom-select my-1 mr-sm-2" id="pastas_option_1" style="width:60%;">
+                       <option selected>Select</option>
                        {% for pasta in pastas %}
-                       <option value="{{pasta.name}}">{{pasta.name}} - {{pasta.price}}</option>
+                       <option value="{{pasta.id}}">{{pasta.name}} - {{pasta.price}}</option>
                        {% endfor %}
                       </select>
                       <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
-                      <input type="number" id="pasta-quantity" name="pasta-quantity" value='1' min="1" max="100" style="width:15%;">
+                      <input type="number" id="pasta-quantity" name="pasta_quantity" value='1' min="1" max="100" style="width:15%;">
 
-                      <select name='dinnerplatter' class="custom-select my-1 mr-sm-2" id="dinnerplatter_option_1" style="width:60%;">
-                       <option selected>DinnerPlatter</option>
+                      <select name='Dinnerplatter' class="custom-select my-1 mr-sm-2" id="dinnerplatter_option_1" style="width:60%;">
+                       <option selected>Select</option>
                        {% for dinnerplatter in dinnerplatters %}
-                       <option value="{{dinnerplatter.name}}">{{dinnerplatter.name}} - {{dinnerplatter.price}}</option>
+                       <option value="{{dinnerplatter.id}}">{{dinnerplatter.name}} - {{dinnerplatter.price}}</option>
                        {% endfor %}
                       </select>
                       <label class="my-1 mr-2" for="inlineFormCustomSelectPref" style="display:inline;">Quantity:</label>
-                      <input type="number" id="dinnerplatter-quantity" name="dinnerplatter-quantity" value='1' min="1" max="100" style="width:15%;">
+                      <input type="number" id="dinnerplatter-quantity" name="dinnerplatter_quantity" value='1' min="1" max="100" style="width:15%;">
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep ordering</button>
                         <input id='checkout' type="submit" class="btn btn-success" value='Go to checkout'>
