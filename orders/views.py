@@ -64,12 +64,32 @@ def register(request):
          return HttpResponseRedirect(reverse("index"))
 
 def cart(request):
+    #pizzas, pastas, salads, subs, dinnerplatters, toppings = [],[], [],[],[],[]
+    items = []
     cart = Cart.objects.filter(user=request.user, ordered=False).first()
-    return HttpResponse(cart)
+    total_cart = cart.get_total()
+    for order in cart.order.all():
+
+        if order.pizza: items.append((order.pizza, order.pizza_quantity))
+        #if len(order.toppings.all()) > 0 : items.append(toppings.append(order.toppings.all()))
+        if order.pasta: items.append((order.pasta, order.pasta_quantity))
+        if order.salad: items.append((order.salad, order.salad_quantity))
+        if order.sub: items.append((order.sub, 1))
+        if order.dinnerplatter:items.append((order.dinnerplatter, order.dinnerplatter_quantity))
+
+
+        #context = {'pizzas': pizzas, 'pastas': pastas, 'toppings':toppings,
+        #            'salads': salads, 'subs':subs, 'dinnerplatters': dinnerplatters,
+        #            'total': total_cart
+        #            }
+
+    context = {'total':total_cart, 'items':items}
+
+
+    return render(request, 'orders/cart.html', context)
 
 def order(request):
     products = ['Pizza', 'Pasta','Salad', 'Sub', 'Dinnerplatter']
-
     total = 0.0
     data = request.POST.copy()
     for product in products:
@@ -90,6 +110,8 @@ def order(request):
                 try:   dinnerplatter = DinnerPlatter.objects.get(id=int(data[product]))
 
                 except: dinnerplatter= None
+
+
 
     #create order object if not present
     order, created = Order.objects.get_or_create(
@@ -124,17 +146,15 @@ def order(request):
     #get cart of user
     try:
         cart = Cart.objects.filter(user=request.user, ordered=False).first()
-        cart.order.add(order)
+        if created: cart.order.add(order)
 
     #if cart_qs.exists():
     #    cart = cart_qs[0]
 
     except:
         cart = Cart.objects.create(user=request.user, ordered=False)
-        cart.order.add(order)
+        if created: cart.order.add(order)
         cart.save()
-    #print(order)
-    #print(cart)
 
-
+    print(created)
     return redirect("cart/")

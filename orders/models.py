@@ -19,7 +19,7 @@ class Topping(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"Topping: {self.name}"
+        return f"{self.name}"
 
 
 class Pasta(models.Model):
@@ -28,7 +28,7 @@ class Pasta(models.Model):
     price = models.DecimalField(help_text="Price in U$S",max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} - "
+        return f"{self.name}"
 
 class Salad(models.Model):
     """docstring for ."""
@@ -36,7 +36,7 @@ class Salad(models.Model):
     price = models.DecimalField(help_text="Price in U$S",max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} - "
+        return f"{self.name}"
 
 
 
@@ -47,7 +47,7 @@ class DinnerPlatter(models.Model):
     price = models.DecimalField(help_text="Price in U$S",max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} - {self.get_size_display()} - "
+        return f"{self.name},{self.get_size_display()}"
 
 
 
@@ -57,7 +57,7 @@ class Pizza(models.Model):
     price = models.DecimalField(help_text="Price in U$S", max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.get_style_display()} - {self.get_size_display()}- "
+        return f"{self.get_style_display()},{self.get_size_display()}"
 
 
 
@@ -67,7 +67,7 @@ class SubExtra(models.Model):
     price = models.DecimalField(help_text="Price in U$S", max_digits=4, decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} "
+        return f"{self.name}"
 
 class Sub(models.Model):
     name = models.CharField(max_length=40)
@@ -107,12 +107,12 @@ class Order(models.Model):
 
     def __str__(self):
         order_string = f"order: "
-        if self.pizza: order_string+= self.pizza.__str__()
-        if self.toppings: order_string+= self.toppings.in_bulk().__str__()
-        if self.pasta: order_string+= self.pasta.__str__()
-        if self.salad: order_string+= self.salad.__str__()
-        if self.sub: order_string+= self.sub.__str__()
-        if self.dinnerplatter: order_string+= self.dinnerplatter.__str__()
+        if self.pizza: order_string+= 'Pizza: '+self.pizza.__str__()+','
+        if self.toppings: order_string+= 'Topping: '+','.join([str(top) for top in self.toppings.all()])
+        if self.pasta: order_string+= 'Pasta: '+self.pasta.__str__()+','
+        if self.salad: order_string+= 'Salad: '+self.salad.__str__()+','
+        if self.sub: order_string+= 'Sub: '+self.sub.__str__()+','
+        if self.dinnerplatter: order_string+= 'DinnerPlatter: '+self.dinnerplatter.__str__()+','
 
         return f"Total of:  {self.get_total_price()} for {order_string}"
 
