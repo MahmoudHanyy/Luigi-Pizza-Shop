@@ -64,7 +64,8 @@ def register(request):
          return HttpResponseRedirect(reverse("index"))
 
 def cart(request):
-    return HttpResponse('I am the cart')
+    cart = Cart.objects.filter(user=request.user, ordered=False).first()
+    return HttpResponse(cart)
 
 def order(request):
     products = ['Pizza', 'Pasta','Salad', 'Sub', 'Dinnerplatter']
@@ -74,25 +75,8 @@ def order(request):
     for product in products:
 
             if product == 'Pizza':
-                try:
-
-                    if data['topping2'] != 'Select':
-                        topping = Topping.objects.get(id = int(data['topping2']))
-                        pizza = Pizza.objects.get(id=int(data[product]))
-                    if data['topping3'] != 'Select':
-                        topping = Topping.objects.get(id = int(data['topping3']))
-                        pizza.toppings.add(topping)
-
-                    if data['topping1'] != 'Cheese':
-                        topping = Topping.objects.get(id = int(data['topping1']))
-                        pizza.toppings.add(topping)
-
-                    else:
-                        topping = Topping.objects.get(id = int(data['topping1']))
-                        pizza.toppings.add(topping)
-                    print(pizza)
+                try: pizza = Pizza.objects.get(id=int(data[product]))
                 except: pizza = None
-
             if product == 'Pasta':
                 try: pasta = Pasta.objects.get(id=int(data[product]))
                 except: pasta= None
@@ -106,9 +90,6 @@ def order(request):
                 try:   dinnerplatter = DinnerPlatter.objects.get(id=int(data[product]))
 
                 except: dinnerplatter= None
-
-
-
 
     #create order object if not present
     order, created = Order.objects.get_or_create(
@@ -124,6 +105,22 @@ def order(request):
         user=request.user,
         ordered=False
     )
+
+    if data['topping2'] != 'Select':
+        topping = Topping.objects.get(id = int(data['topping2']))
+
+        order.toppings.add(topping)
+    if data['topping3'] != 'Select':
+        topping = Topping.objects.get(id = int(data['topping3']))
+        order.toppings.add(topping)
+
+    if data['topping1'] != 'Select':
+        topping = Topping.objects.get(id = int(data['topping1']))
+        order.toppings.add(topping)
+
+    else:
+        topping = Topping.objects.get(name='Cheese')
+        order.toppings.add(topping)
     #get cart of user
     try:
         cart = Cart.objects.filter(user=request.user, ordered=False).first()
@@ -140,4 +137,4 @@ def order(request):
     #print(cart)
 
 
-    return HttpResponse("Hello, Kareem! ")
+    return redirect("cart/")

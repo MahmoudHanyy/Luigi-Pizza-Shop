@@ -120,7 +120,6 @@
 </section>
 
 
-
     <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -152,9 +151,9 @@
 
                       <h5 style="display: block;">Toppings:</h5>
                       <select name='topping1' class="custom-select my-1 mr-sm-2" id="topping_option_1" style="width:60%;">
-                       <option selected>Cheese</option>
+                       <option selected>Select</option>
                        {% for topping in toppings %}
-                       <option value="{{topping.name}}">{{topping.name}}</option>
+                       <option value="{{topping.id}}">{{topping.name}}</option>
                        {% endfor %}
                       </select>
 
@@ -168,7 +167,7 @@
                       <select name='topping3' class="custom-select my-1 mr-sm-2" id="topping_option_3" style="width:60%;">
                        <option selected>Select</option>
                        {% for topping in toppings %}
-                       <option value="{{topping.name}}">{{topping.name}}</option>
+                       <option value="{{topping.id}}">{{topping.name}}</option>
                        {% endfor %}
                       </select>
 
@@ -208,7 +207,7 @@
                       <input type="number" id="dinnerplatter-quantity" name="dinnerplatter_quantity" value='1' min="1" max="100" style="width:15%;">
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep ordering</button>
-                        <input id='checkout' type="submit" class="btn btn-success" value='Go to checkout'>
+                        <input id='checkout' type="submit"  class="btn btn-success" value='Go to checkout'>
                       </div>
                   </form>
                 </div>
