@@ -132,7 +132,7 @@ class Order(models.Model):
             if self.toppings.all().first().name == 'Cheese':
                 return float(self.pizza.price) * int(self.pizza_quantity)
         else:
-            return toppings_choices[f"{self.pizza.get_style_display()}_{self.pizza.get_size_display()}"][str(len(self.toppings.all()))] * float(self.pizza_quantity)
+            return toppings_choices[f"{self.pizza.get_style_display()}_{self.pizza.get_size_display()}"][str(len(self.toppings.all())-1)] * float(self.pizza_quantity)
 
 
 

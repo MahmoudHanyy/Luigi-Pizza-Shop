@@ -68,7 +68,7 @@ def cart(request):
     items = []
     cart = Cart.objects.filter(user=request.user, ordered=False).first()
     total_cart = cart.get_total()
-    for order in cart.order.all():
+    for order in Order.objects.filter(user=request.user, ordered=False):
 
         if order.pizza: items.append((order.pizza, order.pizza_quantity))
         #if len(order.toppings.all()) > 0 : items.append(toppings.append(order.toppings.all()))
@@ -158,3 +158,9 @@ def order(request):
 
     print(created)
     return redirect("cart/")
+
+
+def checkout(request):
+    Order.objects.filter(ordered=False).update(ordered=True)
+    #orders.ordered = False
+    return HttpResponse('you successfully submitted your order!')
